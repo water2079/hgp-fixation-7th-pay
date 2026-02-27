@@ -2,247 +2,237 @@
 <html lang="gu">
 <head>
     <meta charset="UTF-8">
-    <title>7th Pay Fixation - Detailed Vertical Comparison</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7th Pay Fixation Calculator - Gujarat Final Edition</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; padding: 20px; line-height: 1.6; }
-        .container { max-width: 1000px; margin: auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        h2 { text-align: center; color: #1a73e8; border-bottom: 3px solid #1a73e8; padding-bottom: 10px; margin-bottom: 25px; }
-        
-        /* Input Grid */
-        .input-section { background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 25px; border: 1px solid #e0e0e0; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        label { font-weight: bold; display: block; margin-bottom: 5px; color: #444; }
-        select, input { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 15px; box-sizing: border-box; }
-        
-        button { width: 100%; padding: 15px; background: #1a73e8; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; margin-top: 20px; }
-        button:hover { background: #1557b0; }
-
-        /* Comparison Layout */
-        .result-box { margin-top: 30px; display: none; }
-        .conclusion-card { background: #fff9e6; border: 2px solid #f4b400; padding: 20px; border-radius: 10px; margin-bottom: 25px; text-align: center; font-size: 1.2em; font-weight: bold; }
-        
-        .compare-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .card { background: #fff; border: 1px solid #e0e0e0; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .card.opt1 { border-top: 6px solid #1a73e8; }
-        .card.opt2 { border-top: 6px solid #34a853; }
-        
-        .card-title { font-size: 1.15em; font-weight: bold; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee; height: 50px; display: flex; align-items: center; justify-content: center; text-align: center;}
-        .opt1-text { color: #1a73e8; }
-        .opt2-text { color: #188038; }
-
-        .step { margin-bottom: 15px; padding: 10px; border-radius: 5px; background: #fcfcfc; border-left: 3px solid #ddd; }
-        .step-label { font-size: 0.9em; color: #666; display: block; }
-        .step-value { font-size: 1.1em; font-weight: bold; color: #d93025; }
-        .date-text { color: #555; font-weight: bold; }
-
-        /* Table */
-        .summary-table { width: 100%; border-collapse: collapse; margin-top: 25px; }
-        .summary-table th, .summary-table td { border: 1px solid #ddd; padding: 12px; text-align: center; }
-        .summary-table th { background: #f1f3f4; }
-        .highlight { background: #e6f4ea; font-weight: bold; }
+        :root { --primary: #1a73e8; --secondary: #1e7e34; --danger: #d93025; --dark: #202124; --best: #fff9c4; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; margin: 0; padding: 10px; color: var(--dark); }
+        .container { max-width: 1100px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: var(--primary); margin-bottom: 25px; border-bottom: 2px solid #eee; padding-bottom: 15px; font-size: 1.4rem; }
+        .input-section { display: grid; grid-template-columns: 1fr; gap: 15px; background: #f8f9fa; padding: 20px; border-radius: 10px; border: 1px solid #e0e0e0; }
+        @media (min-width: 600px) { .input-section { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
+        .input-group { display: flex; flex-direction: column; }
+        label { font-weight: bold; font-size: 13px; margin-bottom: 8px; color: #5f6368; }
+        input, select { padding: 12px; border: 1px solid #dadce0; border-radius: 6px; font-size: 16px; outline: none; background: white; }
+        button { grid-column: 1 / -1; background: var(--primary); color: white; border: none; padding: 16px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
+        button:hover { background: #1557b0; transform: translateY(-1px); }
+        .conclusion-box { margin-top: 25px; padding: 20px; border-radius: 10px; display: none; text-align: center; border: 2px dashed var(--secondary); background: #f6fff8; }
+        .best-label { color: var(--secondary); font-weight: bold; font-size: 1.2em; }
+        .result-container { display: grid; grid-template-columns: 1fr; gap: 25px; margin-top: 30px; }
+        @media (min-width: 900px) { .result-container { grid-template-columns: 1fr 1fr; } }
+        .res-card { padding: 20px; border-radius: 10px; border-top: 6px solid #ccc; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: none; }
+        .opt1 { border-color: var(--primary); }
+        .opt2 { border-color: var(--secondary); }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
+        th, td { border-bottom: 1px solid #eee; padding: 12px 8px; text-align: left; }
+        th { background: #f8f9fa; color: #5f6368; }
+        .highlight { background-color: #e8f0fe; font-weight: bold; color: var(--primary); }
+        .bonus { background-color: #e6f4ea; font-weight: bold; color: var(--secondary); }
+        .dni-row { background-color: #fff9e6; font-weight: bold; }
+        .info-text { font-size: 12px; color: #70757a; margin-top: 15px; background: #f1f3f4; padding: 10px; border-radius: 4px; }
     </style>
 </head>
 <body>
-
 <div class="container">
-    <h2>બઢતી કે ઉપધો અન્વયે સાતમા પગારપંચ મુજબ પગારબાંધણી</h2>
-    
+    <h2>૭-મું પગાર પંચ બઢતી / ઉપધો પગાર બાંધણી કેલ્ક્યુલેટર</h2>
+    <h2>ગુજરાત સરકારના ROP-2016 મુજબ </h2>
+    <p class="info-text">નોંધ: આ માત્ર શૈક્ષણીક હેતુ છે આખરી પગારબાંધણી ગુજરાત સરકારના ઠરાવો અને પગારચકાસણી એકમને આધીન રહેશે જેને ધ્યાને લેવા વિનંતી.</p>
     <div class="input-section">
-        <div class="grid">
-            <div>
-                <label>હાલનું લેવલ (Current Level):</label>
-                <select id="oldLevel" onchange="updatePayList()"></select>
-            </div>
-            <div>
-                <label>બઢતી/ઉચ્ચતર લેવલ (New Level):</label>
-                <select id="newLevel"></select>
-            </div>
-            <div>
-                <label>હાલનો મુળ પગાર (Current Basic):</label>
-                <select id="currentPay"></select>
-            </div>
-            <div>
-                <label>બઢતી / હુકમ તારીખ (Promotion Date):</label>
-                <input type="date" id="pDate" value="2025-04-16" onchange="validateDates()">
-            </div>
+        <div class="input-group">
+            <label>હાલનું લેવલ (Current Level)</label>
+            <select id="cLvl" onchange="populateBasicPay()"></select>
         </div>
-        <div style="margin-top:15px;">
-            <label>છેલ્લા વાર્ષિક ઇજાફાની તારીખ (Last Increment Date):</label>
-            <input type="date" id="lastDni" value="2024-07-01" onchange="validateDates()">
-            <small style="color: #666;">* આ તારીખ બઢતી તારીખ કરતા મોટી ન હોવી જોઈએ.</small>
+        <div class="input-group">
+            <label>હાલનો બેઝિક (Current Basic)</label>
+            <select id="bp"></select>
         </div>
-        <button onclick="calculate()">ગણતરી કરો અને સરખામણી જુઓ</button>
+        <div class="input-group">
+            <label>નવું લેવલ (New Level)</label>
+            <select id="nLvl"></select>
+        </div>
+        <div class="input-group">
+            <label>બઢતી તારીખ (Promotion Date)</label>
+            <input type="date" id="pDate" value="2025-04-16">
+        </div>
+        <div class="input-group">
+            <label>ઈજાફાનો મહિનો (Increment Month)</label>
+            <select id="iMo">
+                <option value="6">જુલાઈ (July)</option>
+                <option value="0">જાન્યુઆરી (January)</option>
+            </select>
+        </div>
+        <button onclick="calculateFixation()">પગાર બાંધણીની ગણતરી કરો</button>
     </div>
 
-    <div id="results" class="result-box">
-        <div class="conclusion-card" id="verdict"></div>
+    <div id="conclusion" class="conclusion-box"></div>
 
-        <div class="compare-cols">
-            <div class="card opt1">
-                <div class="card-title opt1-text">વિકલ્પ ૧: બઢતી તારીખથી પગારબાંધણી (Without Option)</div>
-                <div id="res1_content"></div>
-            </div>
-
-            <div class="card opt2">
-                <div class="card-title opt2-text">વિકલ્પ ૨: આગામી ઇજાફાની તારીખથી પગારબાંધણી (With Option)</div>
-                <div id="res2_content"></div>
-            </div>
-        </div>
-
-        <div style="margin-top: 30px;">
-            <h3 style="text-align: center; color: #444;">પગાર વધારાનું ટાઈમલાઈન ટેબલ</h3>
-            <table class="summary-table">
-                <thead>
-                    <tr>
-                        <th>તારીખ</th>
-                        <th>વિકલ્પ ૧ મુજબ પગાર</th>
-                        <th>વિકલ્પ ૨ મુજબ પગાર</th>
-                        <th>ફાયદો (Option 2)</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
+    <div id="results" class="result-container">
+        <div class="res-card opt1" id="card1">
+            <h3 id="opt1Title" style="color:var(--primary); margin-top:0;"></h3>
+            <table>
+                <thead><tr><th>તારીખ</th><th>વિગત</th><th>પગારધોરણ </th><th>પગાર</th></tr></thead>
+                <tbody id="b1"></tbody>
             </table>
+            <p class="info-text">નોંધ: આ વિકલ્પમાં ૬ મહિના પછી પહેલો ઈજાફો અને ત્યારબાદ દર વર્ષે ઈજાફો મળે છે.</p>
+        </div>
+
+        <div class="res-card opt2" id="card2">
+            <h3 id="opt2Title" style="color:var(--secondary); margin-top:0;"></h3>
+            <table>
+                <thead><tr><th>તારીખ</th><th>વિગત</th><th>પગારધોરણ </th><th>પગાર</th></tr></thead>
+                <tbody id="b2"></tbody>
+            </table>
+            <p class="info-text">નોંધ: ઈજાફાની તારીખે એક સાથે બે ઈજાફા નિયમિત + કાલ્પનિક  નો લાભ મળે છે.</p>
         </div>
     </div>
+    <div id="matrixPreview" style="margin-top:30px;"></div>
 </div>
 
 <script>
 const matrix = {
-    "IS-1": [14800, 15200, 15700, 16200, 16700, 17200, 17700, 18200, 18700, 19300, 19900, 20500, 21100, 21700, 22400, 23100, 23800, 24500, 25200, 26000, 26800, 27600, 28400, 29300, 30200, 31100, 32000, 33000, 34000, 35000, 36100, 37200, 38300, 39400, 40600, 41800, 43100, 44400, 45700, 47100],
-    "IS-2": [15000, 15500, 16000, 16500, 17000, 17500, 18000, 18500, 19100, 19700, 20300, 20900, 21500, 22100, 22800, 23500, 24200, 24900, 25600, 26400, 27200, 28000, 28800, 29700, 30600, 31500, 32400, 33400, 34400, 35400, 36500, 37600, 38700, 39900, 41100, 42300, 43600, 44900, 46200, 47600],
-    "IS-3": [15700, 16200, 16700, 17200, 17700, 18200, 18700, 19300, 19900, 20500, 21100, 21700, 22400, 23100, 23800, 24500, 25200, 26000, 26800, 27600, 28400, 29300, 30200, 31100, 32000, 33000, 34000, 35000, 36100, 37200, 38300, 39400, 40600, 41800, 43100, 44400, 45700, 47100, 48500, 50000],
-    "1": [18000, 18500, 19100, 19700, 20300, 20900, 21500, 22100, 22800, 23500, 24200, 24900, 25600, 26400, 27200, 28000, 28800, 29700, 30600, 31500, 32400, 33400, 34400, 35400, 36500, 37600, 38700, 39900, 41100, 42300, 43600, 44900, 46200, 47600, 49000, 50500, 52000, 53600, 55200, 56900],
-    "2": [19900, 20500, 21100, 21700, 22400, 23100, 23800, 24500, 25200, 26000, 26800, 27600, 28400, 29300, 30200, 31100, 32000, 33000, 34000, 35000, 36100, 37200, 38300, 39400, 40600, 41800, 43100, 44400, 45700, 47100, 48500, 50000, 51500, 53000, 54600, 56200, 57900, 59600, 61400, 63200],
-    "3": [21700, 22400, 23100, 23800, 24500, 25200, 26000, 26800, 27600, 28400, 29300, 30200, 31100, 32000, 33000, 34000, 35000, 36100, 37200, 38300, 39400, 40600, 41800, 43100, 44400, 45700, 47100, 48500, 50000, 51500, 53000, 54600, 56200, 57900, 59600, 61400, 63200, 65100, 67100, 69100],
-    "4": [25500, 26300, 27100, 27900, 28700, 29600, 30500, 31400, 32300, 33300, 34300, 35300, 36400, 37500, 38600, 39800, 41000, 42200, 43500, 44800, 46100, 47500, 48900, 50400, 51900, 53500, 55100, 56800, 58500, 60300, 62100, 64000, 65900, 67900, 69900, 72000, 74200, 76400, 78700, 81100],
-    "5": [29200, 30100, 31000, 31900, 32900, 33900, 34900, 35900, 37000, 38100, 39200, 40400, 41600, 42800, 44100, 45400, 46800, 48200, 49600, 51100, 52600, 54200, 55800, 57500, 59200, 61000, 62800, 64700, 66600, 68600, 70700, 72800, 75000, 77300, 79600, 82000, 84500, 87000, 89600, 92300],
-    "6": [35400, 36500, 37600, 38700, 39900, 41100, 42300, 43600, 44900, 46200, 47600, 49000, 50500, 52000, 53600, 55200, 56900, 58600, 60400, 62200, 64100, 66000, 68000, 70000, 72100, 74300, 76500, 78800, 81200, 83600, 86100, 88700, 91400, 94100, 96900, 99800, 102800, 105900, 109100, 112400],
-    "7": [39900, 41100, 42300, 43600, 44900, 46200, 47600, 49000, 50500, 52000, 53600, 55200, 56900, 58600, 60400, 62200, 64100, 66000, 68000, 70000, 72100, 74300, 76500, 78800, 81200, 83600, 86100, 88700, 91400, 94100, 96900, 99800, 102800, 105900, 109100, 112400, 115800, 119300, 122900, 126600],
-    "8": [44900, 46200, 47600, 49000, 50500, 52000, 53600, 55200, 56900, 58600, 60400, 62200, 64100, 66000, 68000, 70000, 72100, 74300, 76500, 78800, 81200, 83600, 86100, 88700, 91400, 94100, 96900, 99800, 102800, 105900, 109100, 112400, 115800, 119300, 122900, 126600, 130400, 134300, 138300, 142400],
-    "9": [53100, 54700, 56300, 58000, 59700, 61500, 63300, 65200, 67200, 69200, 71300, 73400, 75600, 77900, 80200, 82600, 85100, 87700, 90300, 93000, 95800, 98700, 101700, 104800, 107900, 111100, 114400, 117800, 121300, 124900, 128600, 132500, 136500, 140600, 144800, 149100, 153600, 158200, 162900, 167800],
-    "10": [56100, 57800, 59500, 61300, 63100, 65000, 67000, 69000, 71100, 73200, 75400, 77700, 80000, 82400, 84900, 87400, 90000, 92700, 95500, 98400, 101400, 104400, 107500, 110700, 114000, 117400, 120900, 124500, 128200, 132000, 136000, 140100, 144300, 148600, 153100, 157700, 162400, 167300, 172300, 177500],
-    "11": [67700, 69700, 71800, 74000, 76200, 78500, 80900, 83300, 85800, 88400, 91100, 93800, 96600, 99500, 102500, 105600, 108800, 112100, 115500, 119000, 122600, 126300, 130100, 134000, 138000, 142100, 146400, 150800, 155300, 160000, 164800, 169700, 174800, 180000, 185400, 191000, 196700, 202600, 208700, 215000],
-    "12": [78800, 81200, 83600, 86100, 88700, 91400, 94100, 96900, 99800, 102800, 105900, 109100, 112400, 115800, 119300, 122900, 126600, 130400, 134300, 138300, 142400, 146700, 151100, 155600, 160300, 165100, 170100, 175200, 180500, 185900, 191500, 197200, 203100, 209200],
-    "13": [123100, 126800, 130600, 134500, 138500, 142700, 147000, 151400, 155900, 160600, 165400, 170400, 175500, 180800, 186200, 191800, 197600, 203500, 209600, 215900],
-    "13-A(CE)": [131100, 135000, 139100, 143300, 147600, 152000, 156600, 161300, 166100, 171100, 176200, 181500, 186900, 192500, 198300, 204200, 210300, 216600],
-    "14": [144200, 148500, 153000, 157600, 162300, 167200, 172200, 177400, 182700, 188200, 193800, 199600, 205600, 211800, 218200],
-    "15": [182200, 187700, 193300, 199100, 205100, 211300, 217600, 224100],
-    "16": [225000]
+    "IS-1 (1300 Grade pay)": [14800, 15200, 15700, 16200, 16700, 17200, 17700, 18200, 18700, 19300, 19900, 20500, 21100, 21700, 22400, 23100, 23800, 24500, 25200, 26000, 26800, 27600, 28400, 29300, 30200, 31100, 32000, 33000, 34000, 35000, 36100, 37200, 38300, 39400, 40600, 41800, 43100, 44400, 45700, 47100],
+    "IS-2 (1400 Grade pay)": [15000, 15500, 16000, 16500, 17000, 17500, 18000, 18500, 19100, 19700, 20300, 20900, 21500, 22100, 22800, 23500, 24200, 24900, 25600, 26400, 27200, 28000, 28800, 29700, 30600, 31500, 32400, 33400, 34400, 35400, 36500, 37600, 38700, 39900, 41100, 42300, 43600, 44900, 46200, 47600],
+    "IS-3 (1650 Grade pay)": [15700, 16200, 16700, 17200, 17700, 18200, 18700, 19300, 19900, 20500, 21100, 21700, 22400, 23100, 23800, 24500, 25200, 26000, 26800, 27600, 28400, 29300, 30200, 31100, 32000, 33000, 34000, 35000, 36100, 37200, 38300, 39400, 40600, 41800, 43100, 44400, 45700, 47100, 48500, 50000],
+    "1 (1800 Grade pay)": [18000, 18500, 19100, 19700, 20300, 20900, 21500, 22100, 22800, 23500, 24200, 24900, 25600, 26400, 27200, 28000, 28800, 29700, 30600, 31500, 32400, 33400, 34400, 35400, 36500, 37600, 38700, 39900, 41100, 42300, 43600, 44900, 46200, 47600, 49000, 50500, 52000, 53600, 55200, 56900],
+    "2 (1900 Grade pay)": [19900, 20500, 21100, 21700, 22400, 23100, 23800, 24500, 25200, 26000, 26800, 27600, 28400, 29300, 30200, 31100, 32000, 33000, 34000, 35000, 36100, 37200, 38300, 39400, 40600, 41800, 43100, 44400, 45700, 47100, 48500, 50000, 51500, 53000, 54600, 56200, 57900, 59600, 61400, 63200],
+    "3 (2000 Grade pay)": [21700, 22400, 23100, 23800, 24500, 25200, 26000, 26800, 27600, 28400, 29300, 30200, 31100, 32000, 33000, 34000, 35000, 36100, 37200, 38300, 39400, 40600, 41800, 43100, 44400, 45700, 47100, 48500, 50000, 51500, 53000, 54600, 56200, 57900, 59600, 61400, 63200, 65100, 67100, 69100],
+    "4 (2400 Grade pay)": [25500, 26300, 27100, 27900, 28700, 29600, 30500, 31400, 32300, 33300, 34300, 35300, 36400, 37500, 38600, 39800, 41000, 42200, 43500, 44800, 46100, 47500, 48900, 50400, 51900, 53500, 55100, 56800, 58500, 60300, 62100, 64000, 65900, 67900, 69900, 72000, 74200, 76400, 78700, 81100],
+    "5 (2800 Grade pay)": [29200, 30100, 31000, 31900, 32900, 33900, 34900, 35900, 37000, 38100, 39200, 40400, 41600, 42800, 44100, 45400, 46800, 48200, 49600, 51100, 52600, 54200, 55800, 57500, 59200, 61000, 62800, 64700, 66600, 68600, 70700, 72800, 75000, 77300, 79600, 82000, 84500, 87000, 89600, 92300],
+    "6 (4200 Grade pay)": [35400, 36500, 37600, 38700, 39900, 41100, 42300, 43600, 44900, 46200, 47600, 49000, 50500, 52000, 53600, 55200, 56900, 58600, 60400, 62200, 64100, 66000, 68000, 70000, 72100, 74300, 76500, 78800, 81200, 83600, 86100, 88700, 91400, 94100, 96900, 99800, 102800, 105900, 109100, 112400],
+    "7 (4400 Grade pay)": [39900, 41100, 42300, 43600, 44900, 46200, 47600, 49000, 50500, 52000, 53600, 55200, 56900, 58600, 60400, 62200, 64100, 66000, 68000, 70000, 72100, 74300, 76500, 78800, 81200, 83600, 86100, 88700, 91400, 94100, 96900, 99800, 102800, 105900, 109100, 112400, 115800, 119300, 122900, 126600],
+    "8 (4600 Grade pay)": [44900, 46200, 47600, 49000, 50500, 52000, 53600, 55200, 56900, 58600, 60400, 62200, 64100, 66000, 68000, 70000, 72100, 74300, 76500, 78800, 81200, 83600, 86100, 88700, 91400, 94100, 96900, 99800, 102800, 105900, 109100, 112400, 115800, 119300, 122900, 126600, 130400, 134300, 138300, 142400],
+    "9 (5400 Grade pay)": [53100, 54700, 56300, 58000, 59700, 61500, 63300, 65200, 67200, 69200, 71300, 73400, 75600, 77900, 80200, 82600, 85100, 87700, 90300, 93000, 95800, 98700, 101700, 104800, 107900, 111100, 114400, 117800, 121300, 124900, 128600, 132500, 136500, 140600, 144800, 149100, 153600, 158200, 162900, 167800],
+    "10 class-1 (5400 Grade pay)": [56100, 57800, 59500, 61300, 63100, 65000, 67000, 69000, 71100, 73200, 75400, 77700, 80000, 82400, 84900, 87400, 90000, 92700, 95500, 98400, 101400, 104400, 107500, 110700, 114000, 117400, 120900, 124500, 128200, 132000, 136000, 140100, 144300, 148600, 153100, 157700, 162400, 167300, 172300, 177500],
+    "11 (6600 Grade pay)": [67700, 69700, 71800, 74000, 76200, 78500, 80900, 83300, 85800, 88400, 91100, 93800, 96600, 99500, 102500, 105600, 108800, 112100, 115500, 119000, 122600, 126300, 130100, 134000, 138000, 142100, 146400, 150800, 155300, 160000, 164800, 169700, 174800, 180000, 185400, 191000, 196700, 202600, 208700, 215000],
+    "12 (7600 Grade pay)": [78800, 81200, 83600, 86100, 88700, 91400, 94100, 96900, 99800, 102800, 105900, 109100, 112400, 115800, 119300, 122900, 126600, 130400, 134300, 138300, 142400, 146700, 151100, 155600, 160300, 165100, 170100, 175200, 180500, 185900, 191500, 197200, 203100, 209200],
+    "13 (8700 Grade pay)": [123100, 126800, 130600, 134500, 138500, 142700, 147000, 151400, 155900, 160600, 165400, 170400, 175500, 180800, 186200, 191800, 197600, 203500, 209600, 215900],
+    "13-A (8900 Grade pay)": [131100, 135000, 139100, 143300, 147600, 152000, 156600, 161300, 166100, 171100, 176200, 181500, 186900, 192500, 198300, 204200, 210300, 216600],
+    "14 (10000 Grade pay)": [144200, 148500, 153000, 157600, 162300, 167200, 172200, 177400, 182700, 188200, 193800, 199600, 205600, 211800, 218200],
+    "15 (HAG)": [182200, 187700, 193300, 199100, 205100, 211300, 217600, 224100],
+    "16 ( CS )": [225000]
 };
 
 function init() {
-    const l1 = document.getElementById('oldLevel');
-    const l2 = document.getElementById('newLevel');
-    Object.keys(matrix).forEach(lvl => {
-        l1.add(new Option("Level " + lvl, lvl));
-        l2.add(new Option("Level " + lvl, lvl));
+    const c = document.getElementById("cLvl"), n = document.getElementById("nLvl");
+    Object.keys(matrix).forEach(l => {
+        c.innerHTML += `<option value="${l}">Level ${l}</option>`;
+        n.innerHTML += `<option value="${l}">Level ${l}</option>`;
     });
-    l1.value = "11"; l2.value = "12";
-    updatePayList();
+    c.value = "11"; n.value = "12";
+    populateBasicPay();
 }
 
-function updatePayList() {
-    const lvl = document.getElementById('oldLevel').value;
-    const paySelect = document.getElementById('currentPay');
-    paySelect.innerHTML = "";
-    matrix[lvl].forEach(val => paySelect.add(new Option(val, val)));
-    if (lvl === "11") paySelect.value = "88400";
+function populateBasicPay() {
+    const cl = document.getElementById('cLvl').value;
+    const bpSelect = document.getElementById('bp');
+    bpSelect.innerHTML = '';
+    matrix[cl].forEach(val => {
+        bpSelect.innerHTML += `<option value="${val}">${val}</option>`;
+    });
 }
 
-function validateDates() {
-    const pDate = new Date(document.getElementById('pDate').value);
-    const lastDni = new Date(document.getElementById('lastDni').value);
-
-    if (lastDni > pDate) {
-        alert("ભૂલ: છેલ્લા ઇજાફાની તારીખ બઢતી તારીખ કરતા મોટી ન હોવી જોઈએ.");
-        // Reset lastDni to pDate as a safe fallback
-        document.getElementById('lastDni').value = document.getElementById('pDate').value;
-    }
-}
-
+function getNext(l, v) { return matrix[l].find(x => x > v) || v; }
+function fixPay(l, v) { return matrix[l].find(x => x >= v) || v; }
 function fmt(d) { return d.toLocaleDateString('en-GB'); }
+function money(v) { return Number(v).toLocaleString('en-IN'); }
 
-function calculate() {
-    // Re-validate before calculation
-    validateDates();
+function calculate6MonthDNI(startDate) {
+    let year = startDate.getFullYear();
+    let jan = new Date(year, 0, 1), july = new Date(year, 6, 1);
+    if (july > startDate && (july - startDate) >= (180 * 24 * 3600 * 1000)) return july;
+    jan.setFullYear(year + 1);
+    if (jan > startDate && (jan - startDate) >= (180 * 24 * 3600 * 1000)) return jan;
+    july.setFullYear(year + 1);
+    return july;
+}
 
-    const oldL = document.getElementById('oldLevel').value;
-    const newL = document.getElementById('newLevel').value;
-    const bp = parseInt(document.getElementById('currentPay').value);
+function calculateFixation() {
+    const cl = document.getElementById('cLvl').value, nl = document.getElementById('nLvl').value;
+    const bp = parseInt(document.getElementById('bp').value);
     const pDate = new Date(document.getElementById('pDate').value);
-    const lastDni = new Date(document.getElementById('lastDni').value);
-    
-    const oldVals = matrix[oldL], newVals = matrix[newL];
-    const currIdx = oldVals.indexOf(bp);
+    document.getElementById('opt1Title').innerText =
+    "વિકલ્પ ૧ (વિકલ્પ વિના ): બઢતી તારીખથી " + fmt(pDate);
+    const iMo = parseInt(document.getElementById('iMo').value);
 
-    // Option 1 Logic
-    const opt1_fix = newVals.find(v => v >= oldVals[currIdx+1]);
-    let dni1 = new Date(pDate); dni1.setMonth(dni1.getMonth() + 6);
-    let dni1Final = new Date(dni1.getFullYear() + (dni1.getMonth() > 6 ? 1 : 0), (dni1.getMonth() <= 6 && dni1.getMonth() > 0 ? 6 : 0), 1);
-    if(dni1Final <= pDate) dni1Final.setFullYear(dni1Final.getFullYear()+1);
-    const opt1_next_pay = newVals[newVals.indexOf(opt1_fix)+1];
-
-    // Option 2 Logic
-    const opt2_temp = newVals.find(v => v >= bp);
-    let fixDate = new Date(pDate.getFullYear(), lastDni.getMonth(), 1);
-    if (fixDate <= pDate) fixDate.setFullYear(fixDate.getFullYear() + 1);
-    const opt2_final = newVals.find(v => v >= oldVals[currIdx+2]);
-    let dni2Final = new Date(fixDate); dni2Final.setFullYear(dni2Final.getFullYear() + 1);
-    const opt2_next_pay = newVals[newVals.indexOf(opt2_final)+1];
-
-    // Card 1 HTML
-    document.getElementById('res1_content').innerHTML = `
-        <div class="step"><span class="step-label">બઢતી તારીખે પગાર (${fmt(pDate)}):</span><span class="step-value">₹ ${opt1_fix}</span></div>
-        <div class="step"><span class="step-label">આગામી ઇજાફાની તારીખ:</span><span class="date-text">${fmt(dni1Final)}</span></div>
-        <div class="step"><span class="step-label">ઇજાફા બાદનો પગાર:</span><span class="step-value">₹ ${opt1_next_pay}</span></div>
+    // Option 1 logic
+    const n1 = getNext(cl, bp), p1 = fixPay(nl, n1), dni1 = calculate6MonthDNI(pDate), p1dni = getNext(nl, p1);
+    document.getElementById('b1').innerHTML = `
+        <tr><td>${fmt(pDate)}</td><td>નોશનલ ઈજાફો</td><td>Level-${cl}</td><td>${money(n1)}</td></tr>
+        <tr class="highlight"><td>${fmt(pDate)}</td><td>પગાર ફિક્સેશન</td><td>Level-${nl}</td><td>${money(p1)}</td></tr>
+        <tr class="dni-row"><td>${fmt(dni1)}</td><td>આગામી ઈજાફો</td><td>Level-${nl}</td><td>${money(p1dni)}</td></tr>
     `;
 
-    // Card 2 HTML
-    document.getElementById('res2_content').innerHTML = `
-        <div class="step"><span class="step-label">કામચલાઉ પગાર (${fmt(pDate)} થી ${fmt(fixDate)}):</span><span class="step-value">₹ ${opt2_temp}</span></div>
-        <div class="step"><span class="step-label">આખરી પગાર બાંધણી તારીખ:</span><span class="date-text">${fmt(fixDate)}</span></div>
-        <div class="step"><span class="step-label">આખરી નિશ્ચિત થયેલ પગાર:</span><span class="step-value">₹ ${opt2_final}</span></div>
-        <div class="step"><span class="step-label">આગામી ઇજાફાની તારીખ:</span><span class="date-text">${fmt(dni2Final)}</span></div>
-        <div class="step"><span class="step-label">આગામી ઇજાફા બાદનો પગાર:</span><span class="step-value">₹ ${opt2_next_pay}</span></div>
+    // Option 2 logic
+    const tempPay = fixPay(nl, bp);
+    let optD = new Date(pDate.getFullYear(), iMo, 1);
+if (optD <= pDate) optD.setFullYear(optD.getFullYear() + 1);
+
+// ADD THIS LINE BELOW
+document.getElementById('opt2Title').innerText =
+    "વિકલ્પ ૨ (વિકલ્પના લાભ સાથે ): ઈજાફા તારીખથી " + fmt(optD);
+    if (optD <= pDate) optD.setFullYear(optD.getFullYear() + 1);
+
+    // Date Range logic: Promotion date to (Increment Date - 1 day)
+    let provEndDate = new Date(optD);
+    provEndDate.setDate(provEndDate.getDate() - 1);
+
+    const reg = getNext(cl, bp), promo = getNext(cl, reg), p2 = fixPay(nl, promo);
+    let dni2 = new Date(optD); dni2.setFullYear(optD.getFullYear() + 1);
+    const p2dni = getNext(nl, p2);
+
+    document.getElementById('b2').innerHTML = `
+        <tr><td><b>${fmt(pDate)} થી ${fmt(provEndDate)}</b></td><td><b>કામચલાઉ પગાર </b></td><td><b>Level-${nl}</b></td><td><b>${money(tempPay)}</b></td></tr>
+        <tr><td>${fmt(optD)}</td><td>નિયમિત ઈજાફો </td><td>Level-${cl}</td><td>${money(reg)}</td></tr>
+        <tr><td>${fmt(optD)}</td><td>કાલ્પનિક ઈજાફો </td><td>Level-${cl} </td><td>${money(promo)}</td></tr>
+        <tr class="bonus"><td>${fmt(optD)}</td><td>ઈજાફાના દિવસે પગારબાંધણી </td><td>Level-${nl}</td><td>${money(p2)}</td></tr>
+        <tr class="dni-row"><td>${fmt(dni2)}</td><td>આગામી ઈજાફો</td><td>Level-${nl} </td><td>${money(p2dni)}</td></tr>
     `;
 
-    // Timeline Table and Row-based Comparison
-    const dates = Array.from(new Set([pDate.getTime(), fixDate.getTime(), dni1Final.getTime(), dni2Final.getTime()])).sort().map(t => new Date(t));
-    let tableHtml = "";
-    let timelineData = [];
+    const conc = document.getElementById('conclusion');
+    conc.style.display = "block";
+    showMatrixPreview(cl, bp, nl, p1);
 
-    dates.forEach(d => {
-        let v1 = (d < dni1Final) ? opt1_fix : opt1_next_pay;
-        let v2;
-        if (d < fixDate) v2 = opt2_temp;
-        else if (d < dni2Final) v2 = opt2_final;
-        else v2 = opt2_next_pay;
-
-        const diff = v2 - v1;
-        timelineData.push({ date: d, opt1: v1, opt2: v2 });
-
-        tableHtml += `<tr>
-            <td>${fmt(d)}</td>
-            <td class="${v1 > v2 ? 'highlight' : ''}">${v1}</td>
-            <td class="${v2 > v1 ? 'highlight' : ''}">${v2}</td>
-            <td style="color:${diff >= 0 ? 'green' : 'red'}; font-weight:bold">${diff > 0 ? '+'+diff : (diff==0 ? 'સમાન' : diff)}</td>
-        </tr>`;
-    });
-    document.getElementById('tableBody').innerHTML = tableHtml;
-
-    // Verdict Logic: Use the 2nd Row (index 1) of the Timeline Table for Comparison
-    if (timelineData.length >= 2) {
-        const row2 = timelineData[1];
-        const finalVerdict = row2.opt2 > row2.opt1 ? "✅ તમારા માટે વિકલ્પ ૨ (Option 2) શ્રેષ્ઠ છે." : "✅ તમારા માટે વિકલ્પ ૧ (Option 1) શ્રેષ્ઠ છે.";
-        document.getElementById('verdict').innerHTML = finalVerdict + `<br><small>(ટાઈમલાઈન ટેબલની બીજી રો મુજબ સરખામણી)</small>`;
+    // Comparison Logic
+    if (p2dni > p1dni) {
+        conc.innerHTML = `<span class="best-label">વિકલ્પ ૨ (Option 2) શ્રેષ્ઠ છે.</span><br><small>લાંબા ગાળે આ વિકલ્પમાં પગાર ₹${money(p2dni)} થશે.</small>`;
+    } else if (p1dni > p2dni) {
+        conc.innerHTML = `<span class="best-label">વિકલ્પ ૧ (Option 1) શ્રેષ્ઠ છે.</span><br><small>બઢતી તારીખથી જ ઊંચો પગાર મળે છે.</small>`;
     } else {
-        const finalVerdict = opt2_final > opt1_fix ? "✅ તમારા માટે વિકલ્પ ૨ (Option 2) શ્રેષ્ઠ છે." : "✅ તમારા માટે વિકલ્પ ૧ (Option 1) શ્રેષ્ઠ છે.";
-        document.getElementById('verdict').innerHTML = finalVerdict;
+        conc.innerHTML = `<span class="best-label">બંને વિકલ્પમાં સમાન ફાયદો છે. વિકલ્પ ૧ પસંદ કરી શકાય.</span>`;
     }
 
-    document.getElementById('results').style.display = "block";
+    document.querySelectorAll('.res-card').forEach(c => c.style.display = 'block');
 }
-init();
+
+function showMatrixPreview(oldLevel, oldPay, newLevel, newPay) {
+    function getRows(level, pay) {
+        const arr = matrix[level];
+        const index = arr.indexOf(pay);
+        if (index === -1) return "";
+        let start = Math.max(0, index - 3);
+        let end = Math.min(arr.length - 1, index + 3);
+        let rows = "";
+        for (let i = start; i <= end; i++) {
+            rows += `<tr class="${i === index ? 'highlight' : ''}"><td style="padding:8px;border-bottom:1px solid #eee;">${money(arr[i])}</td></tr>`;
+        }
+        return rows;
+    }
+
+    document.getElementById("matrixPreview").innerHTML = `
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+            <div class="res-card opt1" style="display:block;">
+                <h3 style="color:var(--primary);margin-top:0;">Old Level (Level-${oldLevel})</h3>
+                <table><thead><tr><th>Matrix</th></tr></thead><tbody>${getRows(oldLevel, oldPay)}</tbody></table>
+            </div>
+            <div class="res-card opt2" style="display:block;">
+                <h3 style="color:var(--secondary);margin-top:0;">New Level (Level-${newLevel})</h3>
+                <table><thead><tr><th>Matrix</th></tr></thead><tbody>${getRows(newLevel, newPay)}</tbody></table>
+            </div>
+        </div>
+    `;
+}
+
+window.onload = init;
 </script>
 </body>
 </html>
