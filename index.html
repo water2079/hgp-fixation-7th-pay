@@ -36,6 +36,8 @@
 <div class="container">
     <h2>૭-મું પગાર પંચ બઢતી / ઉપધો પગાર બાંધણી કેલ્ક્યુલેટર</h2>
     <h2>ગુજરાત સરકારના ROP-2016 મુજબ </h2>
+    <p class="info-text"> developed by SHREYANSH PRAJAPATI and AYAN PATEL 
+    <p class="info-text">જો કોઇ સુધારો કે સુચન sardar4812.gwssb@gmail.com પર જણાવવા વિનંતિ 
     <p class="info-text">નોંધ: આ માત્ર શૈક્ષણીક હેતુ છે આખરી પગારબાંધણી ગુજરાત સરકારના ઠરાવો અને પગારચકાસણી એકમને આધીન રહેશે જેને ધ્યાને લેવા વિનંતી.</p>
     <div class="input-section">
         <div class="input-group">
@@ -157,8 +159,9 @@ function calculateFixation() {
     // Option 1 logic
     const n1 = getNext(cl, bp), p1 = fixPay(nl, n1), dni1 = calculate6MonthDNI(pDate), p1dni = getNext(nl, p1);
     document.getElementById('b1').innerHTML = `
-        <tr><td>${fmt(pDate)}</td><td>નોશનલ ઈજાફો</td><td>Level-${cl}</td><td>${money(n1)}</td></tr>
-        <tr class="highlight"><td>${fmt(pDate)}</td><td>પગાર ફિક્સેશન</td><td>Level-${nl}</td><td>${money(p1)}</td></tr>
+    <tr><td><b>${fmt(pDate)}</b></td><td><b>હાલનો પગાર</b></td><td><b>level-${cl}</b></td><td><b>${money(bp)}</b></td></tr>
+        <tr><td>${fmt(pDate)}</td><td>કાલ્પનિક ઈજાફો</td><td>Level-${cl}</td><td>${money(n1)}</td></tr>
+        <tr class="highlight"><td>${fmt(pDate)}</td><td>બઢતીના દિવસે આખરી પગાર બાંધણી </td><td>Level-${nl}</td><td>${money(p1)}</td></tr>
         <tr class="dni-row"><td>${fmt(dni1)}</td><td>આગામી ઈજાફો</td><td>Level-${nl}</td><td>${money(p1dni)}</td></tr>
     `;
 
@@ -181,10 +184,11 @@ document.getElementById('opt2Title').innerText =
     const p2dni = getNext(nl, p2);
 
     document.getElementById('b2').innerHTML = `
+        <tr><td><b>${fmt(pDate)}</b></td><td><b>હાલનો પગાર</b></td><td><b>level-${cl}</b></td><td><b>${money(bp)}</b></td></tr>
         <tr><td><b>${fmt(pDate)} થી ${fmt(provEndDate)}</b></td><td><b>કામચલાઉ પગાર </b></td><td><b>Level-${nl}</b></td><td><b>${money(tempPay)}</b></td></tr>
         <tr><td>${fmt(optD)}</td><td>નિયમિત ઈજાફો </td><td>Level-${cl}</td><td>${money(reg)}</td></tr>
         <tr><td>${fmt(optD)}</td><td>કાલ્પનિક ઈજાફો </td><td>Level-${cl} </td><td>${money(promo)}</td></tr>
-        <tr class="bonus"><td>${fmt(optD)}</td><td>ઈજાફાના દિવસે પગારબાંધણી </td><td>Level-${nl}</td><td>${money(p2)}</td></tr>
+        <tr class="bonus"><td>${fmt(optD)}</td><td>ઈજાફાના દિવસે આખરી પગારબાંધણી </td><td>Level-${nl}</td><td>${money(p2)}</td></tr>
         <tr class="dni-row"><td>${fmt(dni2)}</td><td>આગામી ઈજાફો</td><td>Level-${nl} </td><td>${money(p2dni)}</td></tr>
     `;
 
