@@ -66,7 +66,7 @@
         <button onclick="calculateFixation()">પગાર બાંધણીની ગણતરી કરો</button>
     </div>
 
-    <div id="conclusion" class="conclusion-box"></div>
+    <div id="conclusion" class="conclusion-box"  style="dispaly:none;"></div>
 
     <div id="results" class="result-container">
         <div class="res-card opt1" id="card1">
@@ -193,16 +193,19 @@ document.getElementById('opt2Title').innerText =
     `;
 
     const conc = document.getElementById('conclusion');
-    conc.style.display = "block";
+    //conc.style.display = "block";
     showMatrixPreview(cl, bp, nl, p1);
 
     // Comparison Logic
-    if (p2dni > p1dni) {
-        conc.innerHTML = `<span class="best-label">વિકલ્પ ૨ (Option 2) શ્રેષ્ઠ છે.</span><br><small>લાંબા ગાળે આ વિકલ્પમાં પગાર ₹${money(p2dni)} થશે.</small>`;
-    } else if (p1dni > p2dni) {
-        conc.innerHTML = `<span class="best-label">વિકલ્પ ૧ (Option 1) શ્રેષ્ઠ છે.</span><br><small>બઢતી તારીખથી જ ઊંચો પગાર મળે છે.</small>`;
+   const sameDate = (dni1.getTime() === optD.getTime());
+    const samePay = (p1dni === p2);
+
+    if (sameDate && samePay) {
+        conc.innerHTML = `<span class="best-label">બંને વિકલ્પ શ્રેષ્ઠ છે. પરંતુ તમે વિકલ્પ ૧ પસંદ કરો તો સારું.</span>`;
+    } else if (p2dni > p1dni) {
+        conc.innerHTML = `<span class="best-label">વિકલ્પ ૨ (Option 2) શ્રેષ્ઠ છે.</span><br><small>લાંબા ગાળે આ વિકલ્પમાં પગાર ₹${p2dni} થશે.</small>`;
     } else {
-        conc.innerHTML = `<span class="best-label">બંને વિકલ્પમાં સમાન ફાયદો છે. વિકલ્પ ૧ પસંદ કરી શકાય.</span>`;
+        conc.innerHTML = `<span class="best-label">વિકલ્પ ૧ (Option 1) શ્રેષ્ઠ છે.</span><br><small>બઢતી તારીખથી જ ઊંચો પગાર મળે છે.</small>`;
     }
 
     document.querySelectorAll('.res-card').forEach(c => c.style.display = 'block');
